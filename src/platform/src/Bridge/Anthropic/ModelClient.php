@@ -53,7 +53,6 @@ final readonly class ModelClient implements ModelClientInterface
             unset($options['beta_features']);
         }
 
-
         return new RawHttpResult($this->httpClient->request('POST', 'https://api.anthropic.com/v1/messages', [
             'headers' => $headers,
             'json' => array_merge($options, $payload),
