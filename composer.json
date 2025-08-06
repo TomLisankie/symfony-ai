@@ -15,6 +15,6 @@
         "sort-packages": true
     },
     "replace": {
-        "TomLisankie/ai-platform": "self.version"
+        "tomlisankie/ai-platform": "self.version"
     }
 }
