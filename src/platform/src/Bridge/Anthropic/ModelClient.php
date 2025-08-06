@@ -37,17 +37,24 @@ final readonly class ModelClient implements ModelClientInterface
         return $model instanceof Claude;
     }
 
-    public function request(Model $model, array|string $payload, array $options = []): RawHttpResult
+    public function request(Model $model, array|string $payload, array $options = [], array $betaFeatures = []): RawHttpResult
     {
+        $headers = [
+            'x-api-key' => $this->apiKey,
+            'anthropic-version' => $this->version,
+        ];
+
         if (isset($options['tools'])) {
             $options['tool_choice'] = ['type' => 'auto'];
         }
 
+        if (!empty($betaFeatures)) {
+            $headers['anthropic-beta'] = implode(',', $betaFeatures);
+        }
+
+
         return new RawHttpResult($this->httpClient->request('POST', 'https://api.anthropic.com/v1/messages', [
-            'headers' => [
-                'x-api-key' => $this->apiKey,
-                'anthropic-version' => $this->version,
-            ],
+            'headers' => $headers,
             'json' => array_merge($options, $payload),
         ]));
     }
