@@ -37,7 +37,7 @@ final readonly class ModelClient implements ModelClientInterface
         return $model instanceof Claude;
     }
 
-    public function request(Model $model, array|string $payload, array $options = [], array $betaFeatures = []): RawHttpResult
+    public function request(Model $model, array|string $payload, array $options = []): RawHttpResult
     {
         $headers = [
             'x-api-key' => $this->apiKey,
@@ -48,8 +48,9 @@ final readonly class ModelClient implements ModelClientInterface
             $options['tool_choice'] = ['type' => 'auto'];
         }
 
-        if (!empty($betaFeatures)) {
-            $headers['anthropic-beta'] = implode(',', $betaFeatures);
+        if (isset($options['beta_features']) && !empty($options['beta_features'])) {
+            $headers['anthropic-beta'] = implode(',', $options['beta_features']);
+            unset($options['beta_features']);
         }
 
 
