@@ -15,6 +15,6 @@
         "sort-packages": true
     },
     "replace": {
-        "symfony/ai-platform": "self.version"
+        "TomLisankie/ai-platform": "self.version"
     }
 }
